@@ -14,6 +14,12 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 });
 
 
+// Create a base layer that holds both maps.
+let baseMaps = {
+	Streets: streets,
+	"Satellite Streets": satelliteStreets
+};
+
 // Create the map object with center, zoom level and default layer.
 let map = L.map('mapid', {
 	center:[39.5, -98.5],
@@ -21,23 +27,10 @@ let map = L.map('mapid', {
 	layers: [streets]
 })
 
-// Create a base layer that holds both maps.
-let baseMaps = {
-	Streets: streets,
-	"Satellite Streets": satelliteStreets
-};
-
- // Create the earthquake layer for our map.
-let earthquakes = new L.layerGroup();
-
-// This overlay will be visible all the time.
-let overlays = {
-	Earthquakes: earthquakes
-};
-
 // Pass our map layers into our layers control and add the layers control to the map.
-L.control.layers(baseMaps, overlays).addTo(map);
+L.control.layers(baseMaps).addTo(map);
 
+ 
 // JSON Data URL.
 let geoJsonDataURL = "https://earthquake.usgs.gov/earthquakes/feed/v1.0/summary/all_week.geojson";
 
@@ -101,8 +94,6 @@ d3.json(geoJsonDataURL).then(function(data) {
 		onEachFeature: function(feature, layer) {
 			layer.bindPopup("Magnitude: " + feature.properties.mag + "<br>Location: " + feature.properties.place);
 	  	}
-	}).addTo(earthquakes);
-
-	earthquakes.addTo(map);
+	}).addTo(map);
 
 });
