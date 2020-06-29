@@ -13,9 +13,10 @@ attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap
 // Create the map object with center at the San Francisco airport.
 let map = L.map('mapid').setView([37.5, -122.5], 10);
 
-// Add San Francisco Airport GeoJSON data.
-let sanFranAirport =
-{"type":"FeatureCollection","features":[{
+//Add San Francisco Airport GeoJSON data.
+let airportData =
+{
+	"type":"FeatureCollection","features":[{
 	"type":"Feature",
 	"properties":{
 		"id":"3469",
@@ -34,8 +35,8 @@ let sanFranAirport =
 ]};
 
 
-// Adding GeoJSON data to the map
-// L.geoJSON(sanFranAirport, {
+// Adding GeoJSON data to the map using pointToLayer
+// L.geoJSON(airportData, {
 // 	// We turn each feature into a marker on the map.
 // 	pointToLayer: function(feature, latlng) {
 // 	console.log(feature);
@@ -44,8 +45,8 @@ let sanFranAirport =
 // 	}
 // }).addTo(map);
 
-// Adding GeoJSON data to the map
-L.geoJSON(sanFranAirport, {
+// Adding GeoJSON data to the map using onEachFeature
+L.geoJSON(airportData, {
     onEachFeature: function(frature, layer){
 		console.log(layer);
 		layer.bindPopup();
