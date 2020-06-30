@@ -142,16 +142,19 @@ legend.onAdd = function() {
 
 legend.addTo(map);
 
+// 
+let techtonicPlateStyle = {
+	color: "#FF0000",
+	weight: 2
+};
 
 // Techtonics Data JSON Data URL
 let geoJsonTechtonicsDataURL = "https://raw.githubusercontent.com/fraxen/tectonicplates/master/GeoJSON/PB2002_boundaries.json";
 
 d3.json(geoJsonTechtonicsDataURL).then(function(data) {
 
-	data.features.forEach((feature) => {
 		// Creating a GeoJSON layer for plate techtonic data with the retrieved data.
-		L.geoJSON(feature.geometry).addTo(techtonicPlates);
-	});
+		L.geoJSON(data.features,{style:techtonicPlateStyle}).addTo(techtonicPlates);
 });
 
 techtonicPlates.addTo(map);
